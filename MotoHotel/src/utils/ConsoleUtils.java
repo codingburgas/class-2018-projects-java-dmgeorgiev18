@@ -10,5 +10,6 @@ public class ConsoleUtils {
     
     public static String readConsoleLine() {
         return scanner.nextLine();
+        //
     }
 }
