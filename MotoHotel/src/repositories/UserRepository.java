@@ -16,7 +16,7 @@ import java.io.PrintStream;
 import java.sql.Connection;
 
 public class UserRepository {
-	private String url = "jdbc:sqlserver://DESKTOP-9QDD8UG\\SQLExpress;encrypt=false;databaseName=Parkinglot;integratedSecurity=true";
+	private String url = "jdbc:sqlserver://SD2310\\SQLExpress;encrypt=false;databaseName=MotoHotel;integratedSecurity=true";
 	private Connection conn;
 
 	public UserRepository() throws SQLException {
@@ -31,7 +31,7 @@ public class UserRepository {
 		conn.close();
 	}
 
-	public void ShowCustomers() throws SQLException {
+	public void ShowUser() throws SQLException {
 		String query1 = "SELECT * FROM [User]";
 
 		Statement stmt = conn.createStatement();
@@ -39,15 +39,17 @@ public class UserRepository {
 		ResultSet rs = stmt.executeQuery(query1);
 
 		while (rs.next()) {
-			String cstFmt = String.format("%d %s %s %s %s %s %s %d", rs.getInt("UserId"), 
-					rs.getString("FirstName"), rs.getString("LastName"), rs.getString("Email"), 
-					rs.getString("Email"), rs.getString("Username"), rs.getString("Password"), rs.getInt("Role"));
+			String cstFmt = String.format("%d %s %s %s %s %s %s %d", rs.getInt("UserId"), rs.getString("FirstName"),
+					rs.getString("LastName"), rs.getString("Email"), rs.getString("Email"), rs.getString("Username"),
+					rs.getString("Password"));
 			System.out.println(cstFmt);
 		}
 	}
 
-	public void InsertCustomers(String firstName, String lastName, String email, String username, String password, int role, int parkingId ) throws SQLException {
-		String query1 = "INSERT INTO User(FirstName,LastName,Email,Username,Password,Role,ParkingId) " + "VALUES(?,?,?,?,?,?,?)";
+	public void InsertUser(String firstName, String lastName, String email, String username, String password,
+			int parkingId) throws SQLException {
+		String query1 = "INSERT INTO User(FirstName,LastName,Email,Username,Password,ParkingId) "
+				+ "VALUES(?,?,?,?,?,?)";
 
 		PreparedStatement stmt = conn.prepareStatement(query1);
 
@@ -56,16 +58,15 @@ public class UserRepository {
 		stmt.setString(3, email);
 		stmt.setString(4, username);
 		stmt.setString(5, password);
-		stmt.setInt(6, role);
-		stmt.setInt(7, parkingId);
-		
+		stmt.setInt(6, parkingId);
+
 		int rs = stmt.executeUpdate();
 
 		System.out.println(String.format("Rows affected: %d", rs));
 	}
 
 	// shows first name of the customer by id
-	public void showCustomerById(Integer id) throws SQLException {
+	public void showUserById(Integer id) throws SQLException {
 		String idStr = id.toString();
 		String query1 = "SELECT * FROM User " + "WHERE UserId = ?";
 
@@ -77,28 +78,34 @@ public class UserRepository {
 
 		while (rs.next()) {
 			String cstFmt = String.format("%d %s %s %s %s", rs.getInt("UserId"), rs.getString("FirstName"),
-					rs.getString("LastName"), rs.getString("Email"), rs.getString("Username"), rs.getInt("Role"), rs.getInt("ParkingId"));
+					rs.getString("LastName"), rs.getString("Email"), rs.getString("Username"), rs.getInt("ParkingId"));
 
 			System.out.println(cstFmt);
 		}
 	}
 
 // Updates the customers first name by id
-	public void updateCustomer(int id, String Fname, String Lname) throws SQLException {
-		String query1 = "UPDATE User " + "SET FirstName = ?, LastName = ? " + "WHERE UserId = ?";
+	public void updateUser(String firstName, String lastName, String email, String username, String password,
+			int parkingId) throws SQLException {
+		String query1 = "UPDATE User "
+				+ "SET FirstName = ?, LastName = ?, Email = ? , UserName = ?,Password = ?,ParkingId = ?"
+				+ "WHERE UserId = ?";
 
 		PreparedStatement stmt = conn.prepareStatement(query1);
 
-		stmt.setString(1, Fname);
-		stmt.setString(2, Lname);
-		stmt.setInt(3, id);
+		stmt.setString(1, firstName);
+		stmt.setString(2, lastName);
+		stmt.setString(3, email);
+		stmt.setString(4, username);
+		stmt.setString(5, password);
+		stmt.setInt(6, parkingId);
 
 		int rs = stmt.executeUpdate();
 
 		System.out.println(String.format("Rows affected: %d", rs));
 	}
 
-	public void deleteCustomer(Integer id) throws SQLException {
+	public void deleteUser(Integer id) throws SQLException {
 		String idStr = id.toString();
 		String query1 = "DELETE FROM User " + "WHERE UserId = ?";
 
@@ -112,7 +119,7 @@ public class UserRepository {
 
 	}
 
-	public List<User> GetCustomers() throws SQLException {
+	public List<User> GetUser() throws SQLException {
 
 		List<User> customers = new ArrayList<User>();
 		String query1 = "SELECT TOP 9 * FROM [User]";
@@ -122,8 +129,8 @@ public class UserRepository {
 		ResultSet rs = stmt.executeQuery(query1);
 
 		while (rs.next()) {
-			String cstFmt = String.format("%d %s %s %s %d %d", rs.getInt("UserId"), rs.getString("FirstName"),
-					rs.getString("LastName"), rs.getString("Email"), rs.getInt("Role"), rs.getInt("ParkingId"));
+			String cstFmt = String.format("%d %s %s %s %d", rs.getInt("UserId"), rs.getString("FirstName"),
+					rs.getString("LastName"), rs.getString("Email"), rs.getInt("ParkingId"));
 			System.out.println(cstFmt);
 		}
 		return customers;

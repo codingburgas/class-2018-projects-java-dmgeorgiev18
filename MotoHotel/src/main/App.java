@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import controllers.UserController;
 import repositories.UserRepository;
 
 import java.io.FileDescriptor;
@@ -21,8 +22,8 @@ public class App {
 		System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, UTF_8));
 //System.out.println(System.getProperty("file.encoding"));
 
-		UserRepository dataBase = new UserRepository();
-		dataBase.GetCustomers();
+		UserRepository database = new UserRepository();
+		//1database.GetUser();
 		//dataBase.ShowCustomers();
 //dataBase.showCustomerById(1);
 //dataBase.updateCustomer(2, "KASHA", "TODD");
@@ -32,5 +33,7 @@ public class App {
 //dataBase.GetCustomers();
 //dataBase.InsertCustomers("manqk", "manqkov","dqnko@abv.bg", "dupnica");
 //dataBase.ShowCustomers();
+	UserController menu = new UserController();
+		menu.optionMenu();
 	}
 }
