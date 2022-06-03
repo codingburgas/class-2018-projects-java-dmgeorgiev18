@@ -75,4 +75,5 @@ public class User {
                 ", projects=" + projects +
                 '}';
     }
+    //what is my name ?
 }
