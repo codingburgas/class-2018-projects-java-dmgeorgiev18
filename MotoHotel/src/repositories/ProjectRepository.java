@@ -15,13 +15,13 @@ public class ProjectRepository {
 
     List<Project> getProjects() {
         List<Project> listOfProjects = new ArrayList<>();
-        String query = "SELECT * FROM projects;";
+        String selectUserQuery1 = "SELECT * FROM projects;";
         // Connecting to a database steps:
         // 1. Get Connection using DriverManager via jdbc_url, username, and password
         // 2. Get PreparedStatement from Connection instance passing query
         // 3. Execute PreparedStatement query and get the ResultSet
         try (Connection conn = DriverManager.getConnection(ApplicationProperties.JDBC_URL, ApplicationProperties.USERNAME, ApplicationProperties.PASSWORD);
-             PreparedStatement ps = conn.prepareStatement(query)) {
+             PreparedStatement ps = conn.prepareStatement(selectUserQuery1)) {
 
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {

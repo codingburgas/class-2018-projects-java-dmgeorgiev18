@@ -10,6 +10,7 @@ public class UserData {
 
 	void insertUser() throws SQLException {
 		UserRepository database = new UserRepository();
+
 		System.out.print("First Name -> ");
 		String firstName = scanner.nextLine();
 		System.out.print("Last Name -> ");
@@ -25,7 +26,9 @@ public class UserData {
 		database.insertUser(firstName, lastName, email, username, password, parkingId);
 	}
 
-	void updateUserInfo() throws SQLException {
+	
+	//remove the comments in useservicece
+	/*void updateUserInfo() throws SQLException {
 
 		UserRepository database = new UserRepository();
 		System.out.print("First Name -> ");
@@ -41,5 +44,5 @@ public class UserData {
 		System.out.print("Parking ID -> ");
 		int parkingId = Integer.parseInt(scanner.nextLine());
 		database.updateUser(firstName, lastName, email, username, password, parkingId);
-	}
+	}*/
 }

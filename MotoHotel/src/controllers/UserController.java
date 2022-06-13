@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import controllers.UserData;
 import repositories.UserRepository;
 
 /*
@@ -31,7 +30,7 @@ public class UserController {
 				int choice = Integer.parseInt(scanner.nextLine());
 				switch (choice) {
 				case 1:
-
+					subMenu(userRepository, scanner);
 					break;
 				case 9:
 					System.exit(0);
@@ -50,12 +49,12 @@ public class UserController {
 
 	void subMenu(UserRepository database, Scanner scanner) throws SQLException {
 		UserData user=new UserData();
-		
+	
 		while (true) {
 			System.out.println("\r\nShow info menu");
 			System.out.println("1. Show user's details");
 			System.out.println("2. Register user");
-			System.out.println("3. Update user's  details");
+			System.out.println("3. Update user's user");
 			System.out.println("9. Return to main menu");
 			System.out.print("Enter your choice: ");
 
@@ -64,16 +63,15 @@ public class UserController {
 				switch (choice) {
 			
 				case 1:
-					database.ShowUser();
+					database.ShowUsers();
 					break;
 				case 2:
 					user.insertUser();
 					break;
 				case 3:
-					user.updateUserInfo();
+					//user.updateUserInfo();
 				case 9:
 					return;
-
 				default:
 					System.out.println("Wrong input! Please enter valid value\r\n");
 					break;

@@ -10,9 +10,6 @@ import java.util.List;
 
 import models.User;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.sql.Connection;
 
 public class UserRepository {
@@ -31,8 +28,8 @@ public class UserRepository {
 		conn.close();
 	}
 
-	public void ShowUser() throws SQLException {
-		String selectUserQuery = "SELECT * FROM [User]";
+	public void ShowUsers() throws SQLException {
+		String selectUserQuery = "SELECT * FROM Users";
 
 		try (Statement stmt = conn.createStatement()) {
 			ResultSet rs = stmt.executeQuery(selectUserQuery);
@@ -43,15 +40,17 @@ public class UserRepository {
 						rs.getString("Password"), rs.getInt("ParkingId"));
 				System.out.println(cstFmt);
 			}
+			
 		}
 	}
 
 	public void insertUser(String firstName, String lastName, String email, String username, String password,
 			int parkingId) throws SQLException {
-		String selectUserQuery = "INSERT INTO User(FirstName,LastName,Email,Username,Password,ParkingId) "
-				+ "VALUES(?,?,?,?,?,?)";
-
-		try (PreparedStatement stmt = conn.prepareStatement(selectUserQuery)) {
+		String selectUserQuery = "EXEC [dbo].[Procedura]" + "@FirstName = ? ," + "@LastName  = ?," + "@Email= ? ,"
+				+ "@Username  = ? ," + "@Password  = ? , " + "@ParkingId = ?";
+		String sqlupdate = "SELECT FROM Users";
+		try(PreparedStatement stmt = conn.prepareStatement(selectUserQuery))
+		{
 
 			stmt.setString(1, firstName);
 			stmt.setString(2, lastName);
@@ -59,18 +58,18 @@ public class UserRepository {
 			stmt.setString(4, username);
 			stmt.setString(5, password);
 			stmt.setInt(6, parkingId);
-			int rs = stmt.executeUpdate();
-
-			System.out.println(String.format("Rows affected: %d", rs));
+			PreparedStatement stmt1 = conn.prepareStatement(sqlupdate);
+			System.out.println(String.format("Gutou"));	
 		}
-
 	}
 
-
 // Updates the customers first name by id
-	public void updateUser(String firstName, String lastName, String email, String username, String password,
+
+	//Remove the comment in userdata
+	
+	/*	public void updateUser(String firstName, String lastName, String email, String username, String password,
 			int parkingId) throws SQLException {
-		String selectUserQuery = "UPDATE User "
+		String selectUserQuery = "UPDATE Users "
 				+ "SET FirstName = ?, LastName = ?, Email = ? , UserName = ?,Password = ?,ParkingId = ?"
 				+ "WHERE UserId = ?";
 		try (PreparedStatement stmt = conn.prepareStatement(selectUserQuery)) {
@@ -89,7 +88,7 @@ public class UserRepository {
 
 	public void deleteUser(Integer id) throws SQLException {
 		String idStr = id.toString();
-		String selectUserQuery = "DELETE FROM User + WHERE UserId = ?";
+		String selectUserQuery = "DELETE FROM Users + WHERE UserId = ?";
 
 		try (PreparedStatement stmt = conn.prepareStatement(selectUserQuery)) {
 			stmt.setInt(1, id);
@@ -103,7 +102,7 @@ public class UserRepository {
 	public List<User> GetUser() throws SQLException {
 
 		List<User> users = new ArrayList<User>();
-		String selectUserQuery = "SELECT * FROM [User]";
+		String selectUserQuery = "SELECT * FROM Users";
 
 		try (Statement stmt = conn.createStatement()) {
 			ResultSet rs = stmt.executeQuery(selectUserQuery);
@@ -116,5 +115,8 @@ public class UserRepository {
 			}
 			return users;
 		}
-	}
+	}*/
+	
+	
+	
 }
