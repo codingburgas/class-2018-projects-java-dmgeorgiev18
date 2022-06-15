@@ -6,11 +6,14 @@ import java.util.Scanner;
 
 import repositories.UserRepository;
 
+
 /*
     Layer #1: Data Presentation
 */
 public class UserController {
 	private UserRepository userRepository;
+	 private boolean isAdmin = true;
+	 UserData user=new UserData();
 	public UserController() throws SQLException {
 		this.setUserRepository(new UserRepository());
 		}
@@ -22,7 +25,8 @@ public class UserController {
 
 		while (true) {
 			System.out.println("\r\nWelcome!");
-			System.out.println("1. Users");
+			System.out.println("1. Users Register");
+			System.out.println("2. Admin Login");
 			System.out.println("9. Exit");
 			System.out.print("Enter your choice: ");
 
@@ -30,9 +34,14 @@ public class UserController {
 				int choice = Integer.parseInt(scanner.nextLine());
 				switch (choice) {
 				case 1:
-					subMenu(userRepository, scanner);
+					user.insertUser();
+					break;
+				case 2:
+					user.AdminMenuCheck();
+					AdminMenu(userRepository, scanner);
 					break;
 				case 9:
+					System.out.println("Goodbye!");
 					System.exit(0);
 					break;
 				default:
@@ -47,14 +56,24 @@ public class UserController {
 		}
 	}
 
-	void subMenu(UserRepository database, Scanner scanner) throws SQLException {
+
+	void UserMenu(UserRepository userRepository, Scanner scanner) throws SQLException {
+		UserData user=new UserData();
+		while(true)
+		{
+			
+		}
+		
+	}
+
+	void AdminMenu(UserRepository database, Scanner scanner) throws SQLException {
 		UserData user=new UserData();
 	
-		while (true) {
+		while (isAdmin == true) {
 			System.out.println("\r\nShow info menu");
-			System.out.println("1. Show user's details");
+			System.out.println("1. Show all users and their details");
 			System.out.println("2. Register user");
-			System.out.println("3. Update user's user");
+			System.out.println("3. Change user's data");
 			System.out.println("9. Return to main menu");
 			System.out.print("Enter your choice: ");
 
@@ -69,7 +88,7 @@ public class UserController {
 					user.insertUser();
 					break;
 				case 3:
-					//user.updateUserInfo();
+					user.deleteUser();
 				case 9:
 					return;
 				default:
