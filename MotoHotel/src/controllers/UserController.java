@@ -38,7 +38,7 @@ public class UserController {
 					break;
 				case 2:
 					user.AdminMenuCheck();
-					AdminMenu(userRepository, scanner);
+					
 					break;
 				case 9:
 					System.out.println("Goodbye!");
@@ -73,7 +73,7 @@ public class UserController {
 			System.out.println("\r\nShow info menu");
 			System.out.println("1. Show all users and their details");
 			System.out.println("2. Register user");
-			System.out.println("3. Change user's data");
+			System.out.println("3. Delete user");
 			System.out.println("9. Return to main menu");
 			System.out.print("Enter your choice: ");
 
@@ -89,6 +89,7 @@ public class UserController {
 					break;
 				case 3:
 					user.deleteUser();
+					break;
 				case 9:
 					return;
 				default:

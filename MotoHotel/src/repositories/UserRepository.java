@@ -113,31 +113,10 @@ public class UserRepository {
 		String selectUserQuery = "DELETE FROM [Users] " + "WHERE UserId = ?";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(selectUserQuery);
-
 			stmt.setInt(1, id);
-
 			int rs = stmt.executeUpdate();
-
 		} catch (SQLException exc) {
 			exc.printStackTrace();
 		}
-
 	}
-	/*
-	 * System.out.println(String.format("Rows affected: %d", rs)); } }
-	 * 
-	 * public List<User> GetUser() throws SQLException {
-	 * 
-	 * List<User> users = new ArrayList<User>(); String selectUserQuery =
-	 * "SELECT * FROM Users";
-	 * 
-	 * try (Statement stmt = conn.createStatement()) { ResultSet rs =
-	 * stmt.executeQuery(selectUserQuery);
-	 * 
-	 * while (rs.next()) { String cstFmt = String.format("%d %s %s %s %s %d",
-	 * rs.getInt("UserId"), rs.getString("FirstName"), rs.getString("LastName"),
-	 * rs.getString("Email"), rs.getString("Password"), rs.getInt("ParkingId"));
-	 * System.out.println(cstFmt); } return users; } }
-	 */
-
 }

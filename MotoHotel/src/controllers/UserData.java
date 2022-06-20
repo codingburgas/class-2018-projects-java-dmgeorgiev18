@@ -7,6 +7,7 @@ import repositories.UserRepository;
 
 public class UserData {
 	Scanner scanner = new Scanner(System.in);
+	private UserController userController;
 
 	void insertUser() throws SQLException {
 		UserRepository database = new UserRepository();
@@ -17,36 +18,24 @@ public class UserData {
 		String lastName = scanner.nextLine();
 		System.out.print("Email --> ");
 		String email = scanner.nextLine();
-
-		int flag = 1;
-		while (flag == 1) {
-			if (email.endsWith("@gmail.com") || email.endsWith("@abv.bg") || email.endsWith("@codingburgas.bg")
-					|| email.endsWith("@yahoo.com")) {
-				
-			} else {
-				System.out.print("Invlid Email. Try Again!");
-				flag = 0;
-			}
-			System.out.print("Username --> ");
-			String username = scanner.nextLine();
-			System.out.print("Password --> ");
-			String password = scanner.nextLine();
-			System.out.print("Parking ID --> ");
-			int parkingId = Integer.parseInt(scanner.nextLine());
-			database.insertUser(firstName, lastName, email, username, password, parkingId);
-		}
+		System.out.print("Username --> ");
+		String username = scanner.nextLine();
+		System.out.print("Password --> ");
+		String password = scanner.nextLine();
+		System.out.print("Parking ID --> ");
+		int parkingId = Integer.parseInt(scanner.nextLine());
+		database.insertUser(firstName, lastName, email, username, password, parkingId);
 	}
 
 	void AdminMenuCheck() throws SQLException {
 		UserRepository database = new UserRepository();
-
+		UserController admin = new UserController();
 		System.out.println("Username--> ");
 		String username = scanner.nextLine();
 		System.out.println("Password--> ");
 		String password = scanner.nextLine();
 		if (username.equals("dmgeorgiev18") && password.equals("27102004dg")) {
-			boolean isAdmin = true;
-
+			admin.AdminMenu(database, scanner);
 		} else {
 			System.out.println("Wrong admin username or password.Try Again!");
 		}
@@ -75,6 +64,7 @@ public class UserData {
 		UserRepository database = new UserRepository();
 		System.out.print("UserId --> ");
 		int userId = Integer.parseInt(scanner.nextLine());
+		database.deleteUser(userId);
 		System.out.print("Successfully deleted user with id " + userId + "!");
 	}
 
